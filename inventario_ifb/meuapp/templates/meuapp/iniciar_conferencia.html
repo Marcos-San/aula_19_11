@@ -1,0 +1,11 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Iniciar Nova Conferência</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Iniciar Conferência</button>
+    <a href="{% url 'conferencia_list' %}">Cancelar</a>
+</form>
+{% endblock %}

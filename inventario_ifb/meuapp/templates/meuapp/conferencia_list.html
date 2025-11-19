@@ -1,0 +1,36 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+
+<h1>Conferências</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Sala</th>
+            <th>Data de inicio</th>
+            <th>Data de fim</th>
+            <th>Ano</th>
+            <th>Responsavel<th>
+            <th>Finalizada</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for conferencia in conferencias %}
+        <tr>
+            <td>{{ conferencia.sala }}</td>
+            <td>{{ conferencia.data_inicio }}</td>
+            <td>{{ conferencia.data_fim }}</td>
+            <td>{{ conferencia.ano }}</td>
+            <td>{{ conferencia.usuario }}</td>
+            <td>{{ conferencia.finalizada }}</td>
+            <td>
+                <a href="{% url 'conferencia_update' conferencia.pk %}">Editar</a>
+                <a href="{% url 'conferencia_delete' conferencia.pk %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Setores</h1>
+<a href="{% url 'setor_create' %}">Novo Setor</a>
+<table>
+    <thead>
+        <tr>
+            <th>Sigla</th>
+            <th>Nome</th>
+            <th>Campus</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for setor in setores %}
+        <tr>
+            <td>{{ setor.sigla }}</td>
+            <td>{{ setor.nome }}</td>
+            <td>{{ setor.campus }}</td>
+            <td>
+                <a href="{% url 'setor_update' setor.pk %}">Editar</a>
+                <a href="{% url 'setor_delete' setor.pk %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

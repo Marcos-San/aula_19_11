@@ -1,0 +1,27 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Salas</h1>
+<a href="{% url 'sala_create' %}">Nova Sala</a>
+<table>
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Setor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sala in salas %}
+        <tr>
+            <td>{{ sala.numero }}</td>
+            <td>{{ sala.setor }}</td>
+            <td>
+                <a href="{% url 'sala_update' sala.pk %}">Editar</a>
+                <a href="{% url 'sala_delete' sala.pk %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

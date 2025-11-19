@@ -1,0 +1,49 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Inventários</h1>
+<a href="{% url 'inventario_create' %}">Novo Inventário</a>
+<a>Baixar Relatorio</a>
+<a href="{% url 'relatorio_pdf' %}">PDF</a>
+<a href="{% url 'relatorio_csv' %}">CSV</a>
+<table>
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Sala Atual</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inventario in inventarios %}
+        <tr>
+            <td>{{ inventario.codigo }}</td>
+            <td>{{ inventario.descricao|truncatewords:10 }}</td>
+            <td>{{ inventario.get_tipo_display }}</td>
+            <td>{{ inventario.get_status_display }}</td>
+            <td>{{ inventario.sala_atual|default:"Não definida" }}</td>
+            <td>
+                <a href="{% url 'inventario_update' inventario.pk %}">Editar</a>
+                <a href="{% url 'inventario_delete' inventario.pk %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Paginação -->
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

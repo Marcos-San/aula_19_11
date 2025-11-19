@@ -1,0 +1,60 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Realizar Conferência - {{ conferencia.sala }} ({{ conferencia.ano }})</h1>
+
+<div class="scanner-section">
+    <h2>Escanear/Digitar Patrimônio</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+<div class="itens-conferidos">
+    <h2>Itens Conferidos ({{ itens_conferidos.count }})</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Observação</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itens_conferidos %}
+            <tr>
+                <td>{{ item.inventario.codigo }}</td>
+                <td>{{ item.inventario.descricao|truncatewords:10 }}</td>
+                <td>{{ item.get_status_conferido_display }}</td>
+                <td>{{ item.observacao|default:"—" }}</td>
+                <td>{{ item.data_conferencia|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<form method="post" style="margin-top: 20px;">
+    {% csrf_token %}
+    <button type="submit" name="finalizar" onclick="return confirm('Deseja realmente finalizar esta conferência?')">
+        Finalizar Conferência
+    </button>
+    <a href="{% url 'conferencia_list' %}">Voltar</a>
+</form>
+
+{% block extra_js %}
+<script>
+// Script para focar automaticamente no campo de busca após cada scan
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.querySelector('input[name="codigo_patrimonio"]');
+    if (input) {
+        input.focus();
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

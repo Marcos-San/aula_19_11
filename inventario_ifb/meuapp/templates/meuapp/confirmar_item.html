@@ -1,0 +1,34 @@
+{% extends 'meuapp/base.html' %}
+
+{% block content %}
+<h1>Confirmar Item da Conferência</h1>
+
+<div class="item-info">
+    <h2>Informações do Patrimônio</h2>
+    <p><strong>Código:</strong> {{ inventario.codigo }}</p>
+    <p><strong>Descrição:</strong> {{ inventario.descricao }}</p>
+    <p><strong>Tipo:</strong> {{ inventario.get_tipo_display }}</p>
+    <p><strong>Status Cadastrado:</strong> {{ inventario.get_status_display }}</p>
+    <p><strong>Sala Cadastrada:</strong> {{ inventario.sala_atual|default:"Não definida" }}</p>
+    <p><strong>Número de Série:</strong> {{ inventario.numero_serie|default:"—" }}</p>
+</div>
+
+{% if ja_conferido %}
+<div class="alert alert-warning">
+    Este item já foi conferido anteriormente nesta conferência. Você pode atualizar as informações.
+</div>
+{% endif %}
+
+<div class="conferencia-info">
+    <h3>Conferindo para:</h3>
+    <p><strong>Sala:</strong> {{ conferencia.sala }}</p>
+    <p><strong>Ano:</strong> {{ conferencia.ano }}</p>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Confirmar Item</button>
+    <a href="{% url 'realizar_conferencia' conferencia.pk %}">Cancelar</a>
+</form>
+{% endblock %}

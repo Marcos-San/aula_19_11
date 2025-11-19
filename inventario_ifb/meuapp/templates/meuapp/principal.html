@@ -1,0 +1,28 @@
+{% extends 'meuapp/base.html' %}
+
+{% block title %}Dashboard - Sistema de Inventário{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Dashboard - Sistema de Inventário IFB</h1>
+    
+    <div class="cards">
+        <div class="card">
+            <h3>Total de Salas</h3>
+            <p>{{ total_salas }}</p>
+        </div>
+        <div class="card">
+            <h3>Total de Inventários</h3>
+            <p>{{ total_inventarios }}</p>
+        </div>
+        <div class="card">
+            <h3>Total de Conferências</h3>
+            <p>{{ total_conferencias }}</p>
+        </div>
+        <div class="card">
+            <h3>Conferências Abertas</h3>
+            <p>{{ conferencias_abertas }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

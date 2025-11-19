@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Inventário IFB{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Adicione aqui Bootstrap, Font Awesome, etc -->
+</head>
+
+<body>
+    <nav>
+        <!-- Menu de navegação aqui -->
+        {% if user.is_authenticated %}
+        <ul>
+            <li><a href="{% url 'principal' %}">Dashboard</a></li>
+            <li><a href="{% url 'setor_list' %}">Setores</a></li>
+            <li><a href="{% url 'sala_list' %}">Salas</a></li>
+            <li><a href="{% url 'inventario_list' %}">Inventários</a></li>
+            <li><a href="{% url 'conferencia_list' %}">Conferências</a></li>
+            <li><a href="{% url 'iniciar_conferencia' %}">Nova Conferência</a></li>
+            <li><a href="{% url 'logout' %}">Sair ({{ user.username }})</a></li>
+        </ul>
+        {% endif %}
+    </nav>
+
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer aqui -->
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
